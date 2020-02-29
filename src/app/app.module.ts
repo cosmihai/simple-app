@@ -9,6 +9,7 @@ import { HomeComponent } from './components/home/home.component';
 import { ContactsComponent } from './components/contacts/contacts.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { ContactFormComponent } from './components/contact-form/contact-form.component';
+import { FilterPipe } from './pipes/filter.pipe';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { ContactFormComponent } from './components/contact-form/contact-form.com
     HomeComponent,
     ContactsComponent,
     NavbarComponent,
-    ContactFormComponent
+    ContactFormComponent,
+    FilterPipe
   ],
   imports: [
     BrowserModule,

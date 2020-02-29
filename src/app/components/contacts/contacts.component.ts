@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ContactsService } from 'src/app/services/contacts.service';
 import { Contact } from 'src/app/models/contact';
 
-
 @Component({
   selector: 'app-contacts',
   templateUrl: './contacts.component.html',
@@ -10,28 +9,32 @@ import { Contact } from 'src/app/models/contact';
 })
 export class ContactsComponent implements OnInit {
 
-  contactsList: object;
+  contactsList: any;
   enableEdit: boolean = false;
   currentId: number;
-  showForm: boolean = false
+  showForm: boolean = false;
+  termName: string;
+  termId: number;
 
   constructor(private contactsService: ContactsService) { }
 
   ngOnInit(): void {
     this.contactsService.getContacts().subscribe(data => {
-      this.contactsList = data
+      let contactsFromLocalStorage = this.contactsService.getContactsFromLocalStorage();
+      this.contactsList = contactsFromLocalStorage.concat(data);
     });
   };
 
-  editContact(id: number): void {
+  onEdit(id: number): void {
     this.currentId = id
     this.enableEdit = true;
   };
 
   saveContact(contact): void {
-    console.log(contact)
     this.enableEdit = false;
     this.currentId = null;
+    this.contactsService.editContactFromLocalStorage(contact)
+
   }  
 
   handleAddContactBtn() {
@@ -39,7 +42,13 @@ export class ContactsComponent implements OnInit {
   }
 
   onNewContact(contact) {
-    console.log(contact)
+    contact.id = this.contactsList.length + 1;
+    this.contactsService.addContact(contact);
+    this.contactsService.getContacts().subscribe(data => {
+      let contactsFromLocalStorage = this.contactsService.getContactsFromLocalStorage();
+      this.contactsList = contactsFromLocalStorage.concat(data);
+    });
+    this.showForm = !this.showForm
   }
 
 }
