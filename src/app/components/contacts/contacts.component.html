@@ -1,0 +1,115 @@
+
+
+<h3 *ngIf="!contactsList">Loading ...</h3>
+<div *ngIf="showForm" class="container">
+    <app-contact-form (newContact)="onNewContact($event)"></app-contact-form>
+</div>
+<table *ngIf="contactsList" class="table table-dark">
+    <thead>
+        <tr><th colspan="8"><button class="btn btn-block bg-light text-primary" (click)="handleAddContactBtn()">Add new contact</button></th></tr>
+      <tr>
+        <th scope="col" rowspan="2" class="align-middle">#</th>
+        <th scope="col" rowspan="2" class="align-middle">First Name</th>
+        <th scope="col" rowspan="2" class="align-middle">Last Name</th>
+        <th scope="col" rowspan="2" class="align-middle">Email</th>
+        <th scope="col" rowspan="2" class="align-middle">Gendre</th>
+        <th scope="col" colspan="2">Address</th>
+        <th scope="col" rowspan="2" class="align-middle">Edit</th>
+      </tr>
+      <tr>
+        <th scope="col">Street</th>
+        <th scope="col">Number</th>
+      </tr>
+    </thead>
+    <tbody>
+
+        <tr *ngFor="let contact of contactsList">
+            <td>{{ contact.id }}</td>
+
+            <td *ngIf="enableEdit && currentId === contact.id">
+                <input 
+                    type="text" 
+                    [(ngModel)]="contact.first_name"  
+                    #firstName ="ngModel"  
+                    required
+                    [ngClass]="{'is-invalid': firstName.errors}"
+                >
+                <div [hidden]="!firstName.errors?.required" class="invalid-feedback">First name required</div>
+            </td>
+            <td *ngIf="currentId !== contact.id">{{ contact.first_name }}</td>
+
+            <td *ngIf="enableEdit && currentId === contact.id">
+                <input 
+                    type="text" 
+                    [(ngModel)]="contact.last_name"
+                    #lastName ="ngModel"  
+                    required
+                    [ngClass]="{'is-invalid': lastName.errors}"
+                >
+                <div [hidden]="!lastName.errors?.required" class="invalid-feedback">Last name required</div>
+            </td>
+            <td *ngIf="currentId !== contact.id">{{ contact.last_name }}</td>
+
+            <td *ngIf="enableEdit && currentId === contact.id">
+                <input 
+                    type="text" 
+                    #email ="ngModel"  
+                    [(ngModel)]="contact.email"
+                    required
+                    pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{1,63}$"
+                    [ngClass]="{'is-invalid': email.errors}"
+                >
+                <div [hidden]="!email.errors?.required" class="invalid-feedback">Email is required</div>
+                <div [hidden]="!email.errors?.pattern" class="invalid-feedback">Must be a valid email</div>
+            </td>
+            <td *ngIf="currentId !== contact.id">{{ contact.email }}</td>
+
+            <td *ngIf="enableEdit && currentId === contact.id">
+                <select 
+                    type="text" 
+                    #gender ="ngModel"  
+                    [(ngModel)]="contact.gender"
+                >
+                <option value="Female">Female</option>
+                <option value="Male">Male</option>
+                </select>
+            </td>
+            <td *ngIf="currentId !== contact.id">{{ contact.gender }}</td>
+
+            <td *ngIf="enableEdit && currentId === contact.id">
+                <input 
+                    type="text" 
+                    #streetName ="ngModel"  
+                    [(ngModel)]="contact.address.street"
+                    pattern="^[a-zA-Z]+$"
+                    [ngClass]="{'is-invalid': streetName.errors}"
+                >
+                <div [hidden]="!streetName.errors?.pattern" class="invalid-feedback">Must contain only letters</div>
+            </td>
+            <td *ngIf="contact.address && currentId !== contact.id">{{ contact.address.street }}</td>
+            <td *ngIf="!contact.address && currentId !== contact.id">No street</td>
+
+            <td *ngIf="enableEdit && currentId === contact.id">
+                <input 
+                    type="text" 
+                    #streetNumber ="ngModel"  
+                    [(ngModel)]="contact.address.number"
+                    pattern="^[0-9]*$"
+                    [ngClass]="{'is-invalid': streetNumber.errors}"
+                >
+                <div [hidden]="!streetNumber.errors?.pattern" class="invalid-feedback">Must contain only numbers</div>
+            </td>
+            <td *ngIf="contact.address && currentId !== contact.id">{{ contact.address.number }}</td>
+            <td *ngIf="!contact.address && currentId !== contact.id">No number</td>
+
+            <td>
+                <button class="btn btn-dark" (click)="editContact(contact.id)">
+                    <i class="fa fa-pencil"></i>
+                </button>
+                <button class="btn btn-dark" (click)="saveContact(contact)" [disabled]="">
+                    <i class="fa fa-check"></i>
+                </button>
+            </td>
+        </tr>
+    </tbody>
+  </table>

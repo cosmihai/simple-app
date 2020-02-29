@@ -1,0 +1,99 @@
+<form (ngSubmit)="onSubmit(contactForm.value); contactForm.reset()" #contactForm="ngForm" >
+    <div class="form-group">
+        <label>First Name</label>
+        <input 
+        type="text"
+        [(ngModel)]="contact.first_name"
+        [ngClass]="{'is-invalid': contactFirstName.errors && contactFirstName.touched}"
+        class="form-control"
+        name="firstName"
+        #contactFirstName="ngModel"
+        required
+        >
+        <div [hidden]="!contactFirstName.errors?.required" class="invalid-feedback">
+        First name required
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Last Name</label>
+        <input 
+        type="text"
+        [(ngModel)]="contact.last_name"
+        [ngClass]="{'is-invalid': contactLastName.errors && contactLastName.touched}"
+        class="form-control"
+        name="lastName"
+        #contactLastName="ngModel"
+        required
+        >
+        <div [hidden]="!contactLastName.errors?.required" class="invalid-feedback">
+        Last name required
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Email</label>
+        <input 
+        type="email"
+        [(ngModel)]="contact.email"
+        [ngClass]="{'is-invalid': contactMail.errors && contactMail.touched}"
+        class="form-control"
+        name="email"
+        #contactMail="ngModel"
+        required
+        pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{1,63}$"
+        >
+        <div [hidden]="!contactMail.errors?.required" class="invalid-feedback">Email is required </div>
+        <div [hidden]="!contactMail.errors?.pattern" class="invalid-feedback">Must be a valid email</div>
+    </div>
+    <div class="form-group">
+        <label>Gender</label>
+        <select 
+            [(ngModel)]="contact.gender"
+            [ngClass]="{'is-invalid': contactGender.errors && contactGender.touched}"
+            class="form-control"
+            name="gender"
+            #contactGender="ngModel"
+            required
+        >
+            <option value="Female">Female</option>
+            <option value="Male">Male</option>
+        </select>
+        <div [hidden]="!contactGender.errors?.required" class="invalid-feedback">Gender is required </div>
+    </div>
+    <div class="form-group">
+        <label>Address</label>
+        <div class="row">
+            <div class="col col-6">
+                <input 
+                placeholder="Street name"
+                type="text"
+                [(ngModel)]="contact.address.street"
+                [ngClass]="{'is-invalid': streetName.errors && streetName.touched}"
+                class="form-control"
+                name="streetName"
+                #streetName="ngModel"
+                pattern="^[a-zA-Z]+$"
+                >
+                <div [hidden]="!streetName.errors?.pattern" class="invalid-feedback">Must contain only letters</div>
+            </div>
+            <div class="col col-6">
+                <input 
+                placeholder="Street number"
+                type="number"
+                [(ngModel)]="contact.address.number"
+                [ngClass]="{'is-invalid': streetNumber.errors && streetNumber.touched}"
+                class="form-control"
+                name="streetNumber"
+                #streetNumber="ngModel"
+                pattern="^[0-9]*$"
+                >
+                <div [hidden]="!streetNumber.errors?.pattern" class="invalid-feedback">Must contain only letters</div>
+            </div>
+        </div>
+
+    </div>
+    <button 
+      [disabled]="!contactForm.form.valid" 
+      class="btn btn-block bg-primary mb-3 ">
+      Submit
+    </button>
+  </form>
