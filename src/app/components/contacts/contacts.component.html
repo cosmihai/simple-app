@@ -109,7 +109,7 @@
                     type="text" 
                     #streetName ="ngModel"  
                     [(ngModel)]="contact.address.street"
-                    pattern="^[a-zA-Z]+$"
+                    pattern="^[a-zA-Z\s]*$"
                     [ngClass]="{'is-invalid': streetName.errors}"
                     class="form-control form-control-sm  mw-6"
                 >
@@ -133,10 +133,10 @@
             <td *ngIf="!contact.address && currentId !== contact.id">No number</td>
 
             <td>
-                <button class="btn btn-dark" (click)="onEdit(contact.id)">
+                <button *ngIf="currentId !== contact.id" class="btn btn-dark" (click)="onEdit(contact.id)">
                     <i class="fa fa-pencil"></i>
                 </button>
-                <button class="btn btn-dark" (click)="saveContact(contact)" [disabled]="">
+                <button *ngIf="enableEdit && currentId === contact.id" class="btn btn-dark" (click)="saveContact(contact)" [disabled]="">
                     <i class="fa fa-check"></i>
                 </button>
             </td>

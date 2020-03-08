@@ -34,7 +34,6 @@ export class ContactsComponent implements OnInit {
     this.enableEdit = false;
     this.currentId = null;
     this.contactsService.editContactFromLocalStorage(contact)
-
   }  
 
   onNewContact(contact) {
