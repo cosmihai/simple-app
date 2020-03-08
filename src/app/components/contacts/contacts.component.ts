@@ -37,10 +37,6 @@ export class ContactsComponent implements OnInit {
 
   }  
 
-  handleAddContactBtn() {
-    this.showForm = !this.showForm;
-  }
-
   onNewContact(contact) {
     contact.id = this.contactsList.length + 1;
     this.contactsService.addContact(contact);

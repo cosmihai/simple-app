@@ -31,7 +31,6 @@ export class ContactsService {
   editContactFromLocalStorage(contact) {
     this.contacts.forEach((item, index) => {
       if (item.id === contact.id) {
-        console.log('inside if')
         this.contacts.splice(index, 1)
         this.contacts.unshift(contact)
       }

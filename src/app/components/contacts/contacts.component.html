@@ -6,28 +6,34 @@
 </div>
 <table *ngIf="contactsList" class="table table-dark">
     <thead>
-        <tr><th colspan="8"><button class="btn btn-block bg-light text-primary" (click)="handleAddContactBtn()">Add new contact</button></th></tr>
-      <tr>
-        <th scope="col" rowspan="2" class="align-middle">#</th>
-        <th scope="col" rowspan="2" class="align-middle">First Name</th>
-        <th scope="col" rowspan="2" class="align-middle">Last Name</th>
-        <th scope="col" rowspan="2" class="align-middle">Email</th>
-        <th scope="col" rowspan="2" class="align-middle">Gendre</th>
-        <th scope="col" colspan="2">Address</th>
-        <th scope="col" rowspan="2" class="align-middle">Edit</th>
-      </tr>
-      <tr>
-        <th scope="col">Street</th>
-        <th scope="col">Number</th>
-      </tr>
+        <tr>
+            <th colspan="8">
+                <button class="btn btn-block bg-light text-primary" (click)="showForm = !showForm">
+                    <span *ngIf="!showForm"> Add new contact</span>
+                    <span *ngIf="showForm">Cancel</span>
+                </button>
+            </th>
+        </tr>
+        <tr>
+            <th scope="col" rowspan="2" class="align-middle">#</th>
+            <th scope="col" rowspan="2" class="align-middle">First Name</th>
+            <th scope="col" rowspan="2" class="align-middle">Last Name</th>
+            <th scope="col" rowspan="2" class="align-middle">Email</th>
+            <th scope="col" rowspan="2" class="align-middle">Gendre</th>
+            <th scope="col" colspan="2">Address</th>
+            <th scope="col" rowspan="2" class="align-middle">Edit</th>
+        </tr>
+        <tr>
+            <th scope="col">Street</th>
+            <th scope="col">Number</th>
+        </tr>
     </thead>
     <tbody>
         <tr>
             <td>
                 <input 
                 placeholder="search"
-                style="max-width: 4.5rem;"
-                class="form-control form-control-sm"
+                class="form-control form-control-sm mw-6"
                 type="number"
                 [(ngModel)]="termId"
             >
@@ -35,8 +41,7 @@
             <td>
                 <input 
                 placeholder="search"
-                    style="max-width: 6rem;"
-                    class="form-control form-control-sm"
+                    class="form-control form-control-sm mw-6"
                     type="text"
                     [(ngModel)]="termName"
                 >
@@ -52,6 +57,7 @@
                     #firstName ="ngModel"  
                     required
                     [ngClass]="{'is-invalid': firstName.errors}"
+                    class="form-control form-control-sm mw-8"
                 >
                 <div [hidden]="!firstName.errors?.required" class="invalid-feedback">First name required</div>
             </td>
@@ -64,6 +70,7 @@
                     #lastName ="ngModel"  
                     required
                     [ngClass]="{'is-invalid': lastName.errors}"
+                    class="form-control form-control-sm  mw-8"
                 >
                 <div [hidden]="!lastName.errors?.required" class="invalid-feedback">Last name required</div>
             </td>
@@ -77,6 +84,7 @@
                     required
                     pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{1,63}$"
                     [ngClass]="{'is-invalid': email.errors}"
+                    class="form-control form-control-sm"
                 >
                 <div [hidden]="!email.errors?.required" class="invalid-feedback">Email is required</div>
                 <div [hidden]="!email.errors?.pattern" class="invalid-feedback">Must be a valid email</div>
@@ -88,6 +96,7 @@
                     type="text" 
                     #gender ="ngModel"  
                     [(ngModel)]="contact.gender"
+                    class="form-control form-control-sm mw-6"
                 >
                 <option value="Female">Female</option>
                 <option value="Male">Male</option>
@@ -102,6 +111,7 @@
                     [(ngModel)]="contact.address.street"
                     pattern="^[a-zA-Z]+$"
                     [ngClass]="{'is-invalid': streetName.errors}"
+                    class="form-control form-control-sm  mw-6"
                 >
                 <div [hidden]="!streetName.errors?.pattern" class="invalid-feedback">Must contain only letters</div>
             </td>
@@ -115,6 +125,7 @@
                     [(ngModel)]="contact.address.number"
                     pattern="^[0-9]*$"
                     [ngClass]="{'is-invalid': streetNumber.errors}"
+                    class="form-control form-control-sm mw-4"
                 >
                 <div [hidden]="!streetNumber.errors?.pattern" class="invalid-feedback">Must contain only numbers</div>
             </td>

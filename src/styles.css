@@ -1,1 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
+
+.mw-2 {
+    max-width: 2rem;
+}
+
+.mw-4 {
+    max-width: 4rem;
+}
+
+.mw-6 {
+    max-width: 6rem;
+}
+
+.mw-8 {
+    max-width: 8rem;
+}
